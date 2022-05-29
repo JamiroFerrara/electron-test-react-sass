@@ -15,7 +15,11 @@
     "node": ">=14.17.0"
   },
   "dependencies": {
-    "electron-store": "^8.0.1"
+    "electron-drag-drop": "^1.1.0",
+    "electron-store": "^8.0.1",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
+    "tailwind": "^4.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.9",

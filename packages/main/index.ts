@@ -1,8 +1,19 @@
-import { app, BrowserWindow, shell } from 'electron'
+import { app, BrowserWindow, ipcMain, shell } from 'electron'
 import { release } from 'os'
 import { join } from 'path'
 import './samples/electron-store'
 import './samples/npm-esm-packages'
+
+const path = require('path')
+const fs = require('fs')
+const https = require('https')
+
+//Create drag and drop icon
+const iconName = path.join(__dirname, 'icon.png');
+const icon = fs.createWriteStream(iconName);
+https.get('https://img.icons8.com/ios/452/drag-and-drop.png', (response: any) => {
+  response.pipe(icon);
+});
 
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith('6.1')) app.disableHardwareAcceleration()
@@ -48,6 +59,13 @@ async function createWindow() {
 }
 
 app.whenReady().then(createWindow)
+
+ipcMain.on('ondragstart', (event, filePath) => {
+  event.sender.startDrag({
+    file: filePath,
+    icon: iconName,
+  })
+})
 
 app.on('window-all-closed', () => {
   win = null

@@ -4,6 +4,7 @@ import { domReady } from './utils'
 import { useLoading } from './loading'
 
 const { appendLoading, removeLoading } = useLoading()
+const path = require('path')
 
 ;(async () => {
   await domReady()
@@ -15,6 +16,12 @@ const { appendLoading, removeLoading } = useLoading()
 contextBridge.exposeInMainWorld('fs', fs)
 contextBridge.exposeInMainWorld('removeLoading', removeLoading)
 contextBridge.exposeInMainWorld('ipcRenderer', withPrototype(ipcRenderer))
+contextBridge.exposeInMainWorld('electron', {
+  startDrag: (fileName: string) => {
+    //ipcRenderer.send('ondragstart', path.join(process.cwd(), fileName))
+    ipcRenderer.send('ondragstart', fileName)
+  }
+})
 
 // `exposeInMainWorld` can't detect attributes and methods of `prototype`, manually patching it.
 function withPrototype(obj: Record<string, any>) {
