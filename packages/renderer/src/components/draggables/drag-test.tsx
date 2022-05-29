@@ -1,20 +1,15 @@
 import React from 'react'
-import {useEffect} from 'react'
+import useDrag from '../../hooks/useDrag'
+import {useState} from 'react'
 
 const fileName = "drag-and-drop.md"
 
-export default function DragTest() {
-  useEffect(() => {
-    const script = document.createElement('script')
-    script.src = "/home/stiwie/Github/electron/electron-test-react-sass/packages/renderer/src/components/draggables/renderer.js"
-    script.async = true;
-    document.body.appendChild(script);
-  })
-
+function DragTest() {
+  useDrag("")
 
   return (
     <>
-      <div onClick={() => handleOnPress()} draggable="true" id="drag" className="hello">hello</div>
+      <div onClick={() => handleOnPress()} draggable="true" id="drag" className="hello">Drag me!</div>
     </>
   )
 }
@@ -22,3 +17,5 @@ export default function DragTest() {
 function handleOnPress() {
   console.log("Item Pressed!")
 }
+
+export default DragTest
